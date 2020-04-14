@@ -16,16 +16,16 @@ script:
 
 after_success:
     - docker build -t mapundir7/face-chat ./web-chat
-    - docker build -t mapundir7/eureka-client ./eureka-client
-    - docker build -t mapundir7/eureka-server ./eureka-server
-    - docker build -t mapundir7/eureka-feign ./eureka-feign
+    # - docker build -t mapundir7/eureka-client ./eureka-client
+    # - docker build -t mapundir7/eureka-server ./eureka-server
+    # - docker build -t mapundir7/eureka-feign ./eureka-feign
     # Log in to the docker CLI
     - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
     # Take those images and push them to docker hub
     - docker push mapundir7/face-chat
-    - docker push mapundir7/eureka-client
-    - docker push mapundir7/eureka-feign
-    - docker push mapundir7/eureka-server
+    # - docker push mapundir7/eureka-client
+    # - docker push mapundir7/eureka-feign
+    # - docker push mapundir7/eureka-server
     # https://docs.aws.amazon.com/AmazonECS/latest/developerguide/task_definition_parameters.html#container_definition_environment
 deploy:
     provider: elasticbeanstalk
