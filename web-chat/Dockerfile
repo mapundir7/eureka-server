@@ -10,7 +10,7 @@ MAINTAINER Manish Pundir <mapundir7@gmail.com>
 VOLUME /appl/tmp
 
 # Make port 8080 available to the world outside this container
-EXPOSE 8080
+#EXPOSE 8080
 
 # The application's jar file
 ARG JAR_FILE=websocket-demo-0.0.1-SNAPSHOT.jar
@@ -19,5 +19,5 @@ ARG JAR_FILE=websocket-demo-0.0.1-SNAPSHOT.jar
 ADD ${JAR_FILE} /appl/web-talk.jar
 
 # Run the jar file 
-ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom","-jar","web-talk.jar"]
+ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom","-jar","-Dserver.port=5000","web-talk.jar"]
 
