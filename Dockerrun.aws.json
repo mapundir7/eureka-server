@@ -6,7 +6,7 @@
             "name": "face-chat",
             "image": "mapundir7/face-chat",
             "hostname": "face-chat",
-            "essential": false,
+            "essential": true,
             "memory": 256,
             "portMappings": [
                 {
