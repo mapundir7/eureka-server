@@ -1,0 +1,87 @@
+version: '3'
+
+services: 
+    redis:
+      image: 'redis:latest'
+      command: redis-server --requirepass password
+    server-1:
+        build:
+            dockerfile: Dockerfile.dev
+            context: ./eureka-server
+        volumes: 
+            - ./eureka-server/server-1:/tmp
+        environment: 
+            - spring.profiles.active=${server_1}
+        ports:
+          - '9001:9001'
+    server-2:
+        build:
+            dockerfile: Dockerfile.dev
+            context: ./eureka-server
+        volumes: 
+            - ./eureka-server/server-2:/tmp
+        environment: 
+            - spring.profiles.active=${server_2}
+        ports:
+          - '9002:9002'
+    server-3:
+        build:
+            dockerfile: Dockerfile.dev
+            context: ./eureka-server
+        volumes: 
+            - ./eureka-server/server-3:/tmp
+        environment: 
+            - spring.profiles.active=${server_3}
+        ports:
+          - '9003:9003'
+    client-1:
+        build:
+            dockerfile: Dockerfile.dev
+            context: ./eureka-client
+        volumes: 
+            - ./eureka-client/client-1:/tmp
+        depends_on:
+          - redis
+          - server-1
+          - server-2
+          - server-3
+        environment: 
+            - spring.profiles.active=client-1
+            - redis-host=redis
+            - redis-password=password
+            - redis-port=6379
+        ports:
+          - '8001:8001'
+    client-2:
+        build:
+            dockerfile: Dockerfile.dev
+            context: ./eureka-client
+        volumes: 
+            - ./eureka-client/client-2:/tmp
+        depends_on:
+          - redis
+          - server-1
+          - server-2
+          - server-3
+        environment: 
+            - spring.profiles.active=client-2
+            - redis-host=redis
+            - redis-password=password
+            - redis-port=6379
+        ports:
+          - '8002:8002'
+
+    feign-1:
+        build:
+            dockerfile: Dockerfile.dev
+            context: ./eureka-feign
+        volumes: 
+            - ./eureka-feign/feign-1:/tmp
+        environment: 
+            - spring.profiles.active=feign-1
+        ports:
+          - '7001:7001'
+        depends_on:
+          - server-1
+          - server-2
+          - server-3

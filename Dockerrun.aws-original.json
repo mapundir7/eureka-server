@@ -1,0 +1,87 @@
+{
+    "AWSEBDockerrunVersion": 2,
+    "containerDefinitions": [
+        {
+
+            "name": "eureka-server-1",
+            "image": "mapundir7/eureka-server",
+            "hostname": "eureka-server-1",
+            "essential": false,
+            "memory": 256,
+            "environment" : [
+                { "name" : "spring.profiles.active", "value" : "${SERVER-1}" }
+            ]
+
+        },
+        {
+
+            "name": "eureka-server-2",
+            "image": "mapundir7/eureka-server",
+            "hostname": "eureka-server-2",
+            "essential": false,
+            "memory": 256,
+            "environment" : [
+                { "name" : "spring.profiles.active", "value" : "${SERVER-2}" }
+            ]
+
+        },
+        {
+
+            "name": "eureka-server-3",
+            "image": "mapundir7/eureka-server",
+            "hostname": "eureka-server-3",
+            "essential": false,
+            "memory": 256,
+            "environment" : [
+                { "name" : "spring.profiles.active", "value" : "${SERVER-3}" }
+            ]
+
+        },
+        {
+
+            "name": "eureka-client-1",
+            "image": "mapundir7/eureka-client",
+            "hostname": "eureka-client-1",
+            "essential": false,
+            "memory": 256,
+            "environment" : [
+                { "name" : "spring.profiles.active", "value" : "${CLIENT-1}" },
+                { "name" : "redis-host", "value" : "${REDIS_HOST}" },
+                { "name" : "redis-port", "value" : "${REDIS_PORT}" },
+                { "name" : "redis-password", "value" : "${REDIS_PASSWORD}" }
+            ]
+        },
+        {
+
+            "name": "eureka-client-2",
+            "image": "mapundir7/eureka-client",
+            "hostname": "eureka-client-2",
+            "essential": false,
+            "memory": 256,
+            "environment" : [
+                { "name" : "redis-host", "value" : "${REDIS_HOST}" },
+                { "name" : "redis-port", "value" : "${REDIS_PORT}" },
+                { "name" : "redis-password", "value" : "${REDIS_PASSWORD}" }
+            ]
+        },
+        {
+
+            "name": "eureka-feign-1",
+            "image": "mapundir7/eureka-feign",
+            "hostname": "eureka-feign-1",
+            "essential": true,
+            "portMappings": [
+                {
+                    "hostPort": 80,
+                    "containerPort": 80
+                }
+            ],
+            "links": ["eureka-server-1", "eureka-server-2", "eureka-server-3"],
+            "memory": 256,
+            "environment" : [
+                { "name" : "spring.profiles.active", "value" : "${FEIGN-1}" }
+            ]
+        }
+    ]
+
+}

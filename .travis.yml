@@ -1,0 +1,40 @@
+sudo: required
+
+language: ruby
+
+services:
+    - docker
+
+before_install:
+  - echo "Testing Docker Hub credentials"
+  - docker login -u=$DOCKER_ID -p=$DOCKER_PASSWORD
+  - echo "Docker Hub credentials are working"
+      
+script:
+  - docker ps -a
+
+
+after_success:
+    - docker build -t mapundir7/face-chat ./web-chat
+    - docker build -t mapundir7/eureka-client ./eureka-client
+    - docker build -t mapundir7/eureka-server ./eureka-server
+    - docker build -t mapundir7/eureka-feign ./eureka-feign
+    # Log in to the docker CLI
+    - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+    # Take those images and push them to docker hub
+    - docker push mapundir7/face-chat
+    - docker push mapundir7/eureka-client
+    - docker push mapundir7/eureka-feign
+    - docker push mapundir7/eureka-server
+    # https://docs.aws.amazon.com/AmazonECS/latest/developerguide/task_definition_parameters.html#container_definition_environment
+deploy:
+    provider: elasticbeanstalk
+    region: us-east-2
+    app: eureka-server
+    env: EurekaServer-env
+    bucket_name: elasticbeanstalk-us-east-2-665899173033
+    bucket_path: eureka-feign
+    on:
+      branch: master
+    access_key_id: $AWS_ACCESS_KEY
+    secret_access_key: $AWS_SECRET_KEY
