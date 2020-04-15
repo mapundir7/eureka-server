@@ -6,8 +6,9 @@
             "name": "eureka-server-1",
             "image": "mapundir7/eureka-server",
             "hostname": "server-1",
-            "essential": true,
+            "essential": false,
             "memory": 256,
+            "links": ["eureka-server-2", "eureka-server-3"],
             "portMappings": [
                 {
                     "hostPort": 80,
@@ -25,6 +26,7 @@
             "hostname": "server-2",
             "essential": false,
             "memory": 256,
+            "links": ["eureka-server-1", "eureka-server-3"],
             "environment" : [
                 { "name" : "spring.profiles.active", "value" : "eureka-2" }
             ]
@@ -36,6 +38,7 @@
             "hostname": "server-3",
             "essential": false,
             "memory": 256,
+            "links": ["eureka-server-1", "eureka-server-2"],
             "environment" : [
                 { "name" : "spring.profiles.active", "value" : "eureka-3" }
             ]
@@ -45,8 +48,9 @@
             "name": "eureka-feign",
             "image": "mapundir7/eureka-feign",
             "hostname": "feign-1",
-            "essential": false,
+            "essential": true,
             "memory": 256,
+            "links": ["eureka-server-1", "eureka-server-2", "eureka-server-3"],
             "environment" : [
                 { "name" : "spring.profiles.active", "value" : "feign-1" }
             ]
