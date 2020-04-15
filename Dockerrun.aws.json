@@ -23,7 +23,7 @@
             "name": "eureka-server-2",
             "image": "mapundir7/eureka-server",
             "hostname": "server-2",
-            "essential": true,
+            "essential": false,
             "memory": 256,
             "environment" : [
                 { "name" : "spring.profiles.active", "value" : "eureka-2" }
@@ -34,10 +34,21 @@
             "name": "eureka-server-3",
             "image": "mapundir7/eureka-server",
             "hostname": "server-3",
-            "essential": true,
+            "essential": false,
             "memory": 256,
             "environment" : [
                 { "name" : "spring.profiles.active", "value" : "eureka-3" }
+            ]
+        },
+        {
+
+            "name": "eureka-feign",
+            "image": "mapundir7/eureka-feign",
+            "hostname": "feign-1",
+            "essential": false,
+            "memory": 256,
+            "environment" : [
+                { "name" : "spring.profiles.active", "value" : "feign-1" }
             ]
         }
     ]
