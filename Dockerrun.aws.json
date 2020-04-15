@@ -9,6 +9,12 @@
             "memory": 256,
             "environment" : [
                 { "name" : "spring.profiles.active", "value" : "feign-1" }
+            ],
+            "portMappings": [
+                {
+                    "hostPort": 80,
+                    "containerPort": 7001
+                }
             ]
         }
     ]
