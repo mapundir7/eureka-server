@@ -19,5 +19,5 @@ ARG JAR_FILE=websocket-demo-0.0.1-SNAPSHOT.jar
 ADD ${JAR_FILE} /appl/web-talk.jar
 
 # Run the jar file 
-ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom","-jar","-Dserver.port=4000","web-talk.jar"]
+ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom","-jar","-Dserver.port=8080","web-talk.jar"]
 
