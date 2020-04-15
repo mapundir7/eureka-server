@@ -1,0 +1,57 @@
+{
+    "AWSEBDockerrunVersion": 2,
+    "containerDefinitions": [
+        {
+
+            "name": "eureka-server-1",
+            "image": "mapundir7/eureka-server",
+            "hostname": "server-1",
+            "essential": false,
+            "memory": 256,
+            "portMappings": [
+                {
+                    "hostPort": 80,
+                    "containerPort": 9001
+                }
+            ],
+            "environment" : [
+                { "name" : "spring.profiles.active", "value" : "eureka-1" }
+            ]
+        },
+        {
+
+            "name": "eureka-server-2",
+            "image": "mapundir7/eureka-server",
+            "hostname": "server-2",
+            "essential": false,
+            "memory": 256,
+            "environment" : [
+                { "name" : "spring.profiles.active", "value" : "eureka-2" }
+            ]
+        },
+        {
+
+            "name": "eureka-server-3",
+            "image": "mapundir7/eureka-server",
+            "hostname": "server-3",
+            "essential": false,
+            "memory": 256,
+            "environment" : [
+                { "name" : "spring.profiles.active", "value" : "eureka-3" }
+            ]
+        },
+        {
+
+            "name": "eureka-feign",
+            "image": "mapundir7/eureka-feign",
+            "hostname": "feign-1",
+            "essential": true,
+            "memory": 256,
+            "links": ["eureka-server-1", "eureka-server-2", "eureka-server-3"],
+            "environment" : [
+                { "name" : "spring.profiles.active", "value" : "feign-1" }
+            ]
+        }
+    ]
+
+}
