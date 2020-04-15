@@ -1,0 +1,20 @@
+{
+    "AWSEBDockerrunVersion": 2,
+    "containerDefinitions": [
+        {
+
+            "name": "face-chat",
+            "image": "mapundir7/face-chat",
+            "hostname": "face-chat",
+            "essential": true,
+            "memory": 256,
+            "portMappings": [
+                {
+                    "hostPort": 80,
+                    "containerPort": 8080
+                }
+            ]
+        }
+    ]
+
+}

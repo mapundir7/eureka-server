@@ -3,16 +3,41 @@
     "containerDefinitions": [
         {
 
-            "name": "face-chat",
-            "image": "mapundir7/face-chat",
-            "hostname": "face-chat",
+            "name": "eureka-server-1",
+            "image": "mapundir7/eureka-server",
+            "hostname": "server-1",
             "essential": true,
             "memory": 256,
             "portMappings": [
                 {
                     "hostPort": 80,
-                    "containerPort": 8080
+                    "containerPort": 9001
                 }
+            ],
+            "environment" : [
+                { "name" : "spring.profiles.active", "value" : "eureka-1" }
+            ]
+        },
+        {
+
+            "name": "eureka-server-2",
+            "image": "mapundir7/eureka-server",
+            "hostname": "server-2",
+            "essential": true,
+            "memory": 256,
+            "environment" : [
+                { "name" : "spring.profiles.active", "value" : "eureka-2" }
+            ]
+        },
+        {
+
+            "name": "eureka-server-3",
+            "image": "mapundir7/eureka-server",
+            "hostname": "server-3",
+            "essential": true,
+            "memory": 256,
+            "environment" : [
+                { "name" : "spring.profiles.active", "value" : "eureka-3" }
             ]
         }
     ]
