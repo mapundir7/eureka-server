@@ -8,7 +8,6 @@
             "hostname": "server-1",
             "essential": false,
             "memory": 256,
-            "links": ["eureka-server-2", "eureka-server-3"],
             "portMappings": [
                 {
                     "hostPort": 80,
@@ -26,7 +25,6 @@
             "hostname": "server-2",
             "essential": false,
             "memory": 256,
-            "links": ["eureka-server-1", "eureka-server-3"],
             "environment" : [
                 { "name" : "spring.profiles.active", "value" : "eureka-2" }
             ]
@@ -38,7 +36,6 @@
             "hostname": "server-3",
             "essential": false,
             "memory": 256,
-            "links": ["eureka-server-1", "eureka-server-2"],
             "environment" : [
                 { "name" : "spring.profiles.active", "value" : "eureka-3" }
             ]
